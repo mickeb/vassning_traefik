@@ -1,5 +1,5 @@
 services:
-  app:
+  public_site:
     build:
       context: ./apps/public_site
       dockerfile: Dockerfile
@@ -8,10 +8,23 @@ services:
       - '3000:3000'
     volumes:
       - ./apps/public_site:/app
-      - /node_modules
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.public_site.rule=Host(`mittforetag.localhost`)"
+
+  my_pages:
+    build:
+      context: ./apps/my_pages
+      dockerfile: Dockerfile
+    container_name: my_pages
+    ports:
+      - '3001:3000'
+    volumes:
+      - ./apps/my_pages:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.my_pages.rule=Host(`mypages.mittforetag.localhost`)"
+
 
   traefik:
     image: traefik:v3.1.2
