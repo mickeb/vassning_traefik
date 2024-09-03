@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: "/etc/certs/mitt-foretag-local-cert.pem"
+      keyFile: "/etc/certs/mitt-foretag-local-key.pem"

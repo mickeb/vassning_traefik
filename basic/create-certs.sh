@@ -1,0 +1,1 @@
+mkcert -cert-file mitt-foretag-local-cert.pem -key-file mitt-foretag-local-key.pem "mittforetag.localhost" "*.mittforetag.localhost"
