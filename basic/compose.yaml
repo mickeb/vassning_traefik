@@ -11,10 +11,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.public_site.rule=Host(`mittforetag.localhost`)"
-      - "traefik.http.routers.public_site.entrypoints=web-secure"
-      - "traefik.http.routers.public_site.tls=true"
-      - "traefik.http.routers.public_site.tls.domains[0].main=mittforetag.localhost"
-      #- "traefik.http.routers.public_site.tls.domains[0].sans=*.mittforetag.localhost"
 
   my_pages:
     build:
@@ -28,10 +24,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.my_pages.rule=Host(`mypages.mittforetag.localhost`)"
-      - "traefik.http.routers.my_pages.entrypoints=web-secure"
-      - "traefik.http.routers.my_pages.tls=true"
-      #- "traefik.http.routers.my_pages.tls.domains[0].main=mittforetag.localhost"
-      - "traefik.http.routers.my_pages.tls.domains[0].sans=*.mittforetag.localhost"
 
   traefik:
     image: traefik:v3.1.2
@@ -39,24 +31,12 @@ services:
       - "--api.insecure=true"
       - "--providers.docker"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.web-secure.address=:443"
       - "--providers.docker.exposedbydefault=false"
-      - "--accesslog"
-      - "--log.level=ERROR"
-      - "--providers.file.directory=/etc/traefik"
-      - "--providers.file.watch=true"
     ports:
       # The HTTP port
       - "80:80"
-      # The HTTPS port
-      - "443:443"
       # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-      # Config
-      - ./.traefik/config:/etc/traefik:ro
-      # Certificate store
-      - ./.traefik/certs:/etc/certs:ro
-
