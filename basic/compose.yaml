@@ -14,7 +14,6 @@ services:
       - "traefik.http.routers.public_site.entrypoints=web-secure"
       - "traefik.http.routers.public_site.tls=true"
       - "traefik.http.routers.public_site.tls.domains[0].main=mittforetag.localhost"
-      #- "traefik.http.routers.public_site.tls.domains[0].sans=*.mittforetag.localhost"
 
   my_pages:
     build:
@@ -30,7 +29,6 @@ services:
       - "traefik.http.routers.my_pages.rule=Host(`mypages.mittforetag.localhost`)"
       - "traefik.http.routers.my_pages.entrypoints=web-secure"
       - "traefik.http.routers.my_pages.tls=true"
-      #- "traefik.http.routers.my_pages.tls.domains[0].main=mittforetag.localhost"
       - "traefik.http.routers.my_pages.tls.domains[0].sans=*.mittforetag.localhost"
 
   traefik:
@@ -59,4 +57,3 @@ services:
       - ./.traefik/config:/etc/traefik:ro
       # Certificate store
       - ./.traefik/certs:/etc/certs:ro
-
